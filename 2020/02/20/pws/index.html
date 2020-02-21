@@ -46,12 +46,12 @@
   };
 </script>
 
-  <meta name="description" content="密码学的实验报告，密码学真的难，DES完全是只知道思路但是写不出代码，最后到github参考了别人的代码才勉强修改完成，哈希稍微好些，可以选择，选了SHA-256以后简单的做了一个不加盐的函数，但是仍旧不是自己完全写出来的成果，ORZ…过程很辛苦，查了很多资料，看了很多别人的实现方法，还是记录一下。 古典密码凯撒密码在密码学中，恺撒密码（英语：Caesar cipher）">
+  <meta name="description" content="密码学的实验报告，密码学真的难，DES完全是只知道思路但是写不出代码，最后到github参考了别人的代码才勉强修改完成，哈希稍微好些，可以选择，选了SHA-256以后简单的做了一个不加盐的函数，但是仍旧不是自己完全写出来的成果，ORZ…过程很辛苦，查了很多资料，看了很多别人的实现方法，还是记录一下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="密码学实验">
 <meta property="og:url" content="https://kkotori.github.io/2020/02/20/pws/index.html">
 <meta property="og:site_name" content="WS">
-<meta property="og:description" content="密码学的实验报告，密码学真的难，DES完全是只知道思路但是写不出代码，最后到github参考了别人的代码才勉强修改完成，哈希稍微好些，可以选择，选了SHA-256以后简单的做了一个不加盐的函数，但是仍旧不是自己完全写出来的成果，ORZ…过程很辛苦，查了很多资料，看了很多别人的实现方法，还是记录一下。 古典密码凯撒密码在密码学中，恺撒密码（英语：Caesar cipher）">
+<meta property="og:description" content="密码学的实验报告，密码学真的难，DES完全是只知道思路但是写不出代码，最后到github参考了别人的代码才勉强修改完成，哈希稍微好些，可以选择，选了SHA-256以后简单的做了一个不加盐的函数，但是仍旧不是自己完全写出来的成果，ORZ…过程很辛苦，查了很多资料，看了很多别人的实现方法，还是记录一下。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kkotori.github.io/2020/02/20/pws/image001.jpg">
 <meta property="og:image" content="https://kkotori.github.io/2020/02/20/pws/image002.jpg">
@@ -76,7 +76,7 @@
 <meta property="og:image" content="https://kkotori.github.io/2020/02/20/pws/image022.jpg">
 <meta property="og:image" content="https://kkotori.github.io/2020/02/20/pws/image023.jpg">
 <meta property="article:published_time" content="2020-02-20T07:36:40.000Z">
-<meta property="article:modified_time" content="2020-02-20T14:34:58.253Z">
+<meta property="article:modified_time" content="2020-02-21T11:24:45.374Z">
 <meta property="article:author" content="K_Kotori">
 <meta property="article:tag" content="StudyM">
 <meta name="twitter:card" content="summary">
@@ -162,6 +162,16 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
@@ -215,9 +225,26 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-20 15:36:40 / 修改时间：22:34:58" itemprop="dateCreated datePublished" datetime="2020-02-20T15:36:40+08:00">2020-02-20</time>
+              <time title="创建时间：2020-02-20 15:36:40" itemprop="dateCreated datePublished" datetime="2020-02-20T15:36:40+08:00">2020-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-21 19:24:45" itemprop="dateModified" datetime="2020-02-21T19:24:45+08:00">2020-02-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/StudyM/" itemprop="url" rel="index">
+                    <span itemprop="name">StudyM</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -430,6 +457,7 @@ ul
 <body lang=ZH-CN link=blue vlink="#954F72" style='text-justify-trim:punctuation'>
 
 <p>密码学的实验报告，密码学真的难，DES完全是只知道思路但是写不出代码，最后到github参考了别人的代码才勉强修改完成，哈希稍微好些，可以选择，选了SHA-256以后简单的做了一个不加盐的函数，但是仍旧不是自己完全写出来的成果，ORZ…<br>过程很辛苦，查了很多资料，看了很多别人的实现方法，还是记录一下。</p>
+<a id="more"></a>
 <h1 id="古典密码"><a href="#古典密码" class="headerlink" title="古典密码"></a><a name="_Toc28387027"><span style='font-size:18.0pt;font-family:黑体'>古典密码</span></a></h1><h2 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a><a name="_Toc534469237"><span style='font-size:16.0pt;font-family:黑体'>凯撒密码</span></a></h2><p><span style='color:black'>在<span lang=EN-US><a href="https://baike.baidu.com/item/%E5%AF%86%E7%A0%81%E5%AD%A6" target="_blank" rel="noopener"><span lang=EN-US style='color:black;text-decoration:none'><span lang=EN-US>密码学</span></span></a></span>中，恺撒密码（英语：<span lang=EN-US>Caesar cipher</span>），或称恺撒加密、恺撒变换、变换加密，是一种最简单且最广为人知的加密技术。它是一种替换加密的技术，</span><span lang=EN-US><a href="https://baike.baidu.com/item/%E6%98%8E%E6%96%87" target="_blank" rel="noopener"><span lang=EN-US style='color:black;text-decoration:none'><span lang=EN-US>明文</span></span></a></span><span style='color:black'>中的所有字母都在</span><span lang=EN-US><a href="https://baike.baidu.com/item/%E5%AD%97%E6%AF%8D%E8%A1%A8" target="_blank" rel="noopener"><span lang=EN-US style='color:black;text-decoration:none'><span lang=EN-US>字母表</span></span></a></span><span style='color:black'>上向后（或向前）按照一个固定数目进行偏移后被替换成<span lang=EN-US><a href="https://baike.baidu.com/item/%E5%AF%86%E6%96%87" target="_blank" rel="noopener"><span lang=EN-US style='color:black;text-decoration:none'><span lang=EN-US>密文</span></span></a></span>。例如，当偏移量是<span lang=EN-US>3</span>的时候，所有的字母<span lang=EN-US>A</span>将被替换成<span lang=EN-US>D</span>，<span lang=EN-US>B</span>变成<span lang=EN-US>E</span>，以此类推。这个加密方法是以罗马共和时期</span><span lang=EN-US><a href="https://baike.baidu.com/item/%E6%81%BA%E6%92%92" target="_blank" rel="noopener"><span lang=EN-US style='color:black;text-decoration:none'><span lang=EN-US>恺撒</span></span></a></span><span style='color:black'>的名字命名的，当年恺撒曾用此方法与其将军们进行联系。</span></p>
 <h3 id="凯撒安全性分析"><a href="#凯撒安全性分析" class="headerlink" title="凯撒安全性分析"></a><span style='font-size:14.0pt;font-family:黑体'>凯撒安全性分析</span></h3><p>由于英文只有<span lang=EN-US>26</span>个字母，而且可以通过求余降幂，规模最大为<span lang=EN-US>26</span>。完全可以暴力攻击。</p>
 <h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a><span style='font-size:14.0pt'>加密</span></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">char</span> cry[<span class="number">1000010</span>];</span><br><span class="line"><span class="comment">//char enc[1000010];</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> t,k;</span><br><span class="line">  <span class="keyword">int</span> i;</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;t);</span><br><span class="line">  <span class="keyword">while</span>(t–)&#123;</span><br><span class="line">     <span class="built_in">memset</span>(cry,<span class="string">'\0'</span>,<span class="keyword">sizeof</span>(cry));</span><br><span class="line">     <span class="comment">//memset(enc,'\0',sizeof(enc));</span></span><br><span class="line">     <span class="built_in">scanf</span>(<span class="string">"%s"</span>,cry);</span><br><span class="line">     <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;k);</span><br><span class="line">     <span class="comment">//printf("%d",k);</span></span><br><span class="line">     <span class="comment">//for(i=0;cry[i]!='\0';i++);</span></span><br><span class="line">     k=k%<span class="number">26</span>;</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;cry[i]!=<span class="string">'\0'</span>;i++)&#123;</span><br><span class="line">         <span class="keyword">if</span>(cry[i]&lt;<span class="string">'A'</span>||cry[i]&gt;<span class="string">'z'</span>||(cry[i]&gt;<span class="string">'Z'</span>&amp;&amp;cry[i]&lt;<span class="string">'a'</span>))&#123;</span><br><span class="line">            cry[i]=cry[i];</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span></span><br><span class="line">         <span class="keyword">if</span>((cry[i]-k&gt;<span class="string">'Z'</span>&amp;&amp;(cry[i]&gt;=<span class="string">'A'</span>&amp;&amp;cry[i]&lt;=<span class="string">'Z'</span>))||(cry[i]-k&gt;<span class="string">'z'</span>&amp;&amp;(cry[i]&gt;=<span class="string">'a'</span>&amp;&amp;cry[i]&lt;=<span class="string">'z'</span>)))&#123;</span><br><span class="line">            cry[i]=<span class="keyword">char</span>(cry[i]+k<span class="number">-26</span>);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span></span><br><span class="line">         <span class="keyword">if</span>((cry[i]-k&lt;<span class="string">'A'</span>&amp;&amp;(cry[i]&gt;=<span class="string">'A'</span>&amp;&amp;cry[i]&lt;=<span class="string">'Z'</span>))||(cry[i]-k&lt;<span class="string">'a'</span>&amp;&amp;(cry[i]&gt;=<span class="string">'a'</span>&amp;&amp;cry[i]&lt;=<span class="string">'z'</span>)))&#123;</span><br><span class="line">            cry[i]=<span class="keyword">char</span>(cry[i]+<span class="number">26</span>-k);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">else</span>&#123;</span><br><span class="line">            cry[i]=<span class="keyword">char</span>(cry[i]-k);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,cry);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//cout&lt;&lt;cry;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -925,9 +953,17 @@ style='font-family:宋体'>M</span>。</p>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-      <div class="site-state-item site-state-tags">
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">3</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -1016,3 +1052,4 @@ style='font-family:宋体'>M</span>。</p>
 
 <script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
 </html>
+<script type="text/javascript" src="/custom/dynamic_title.js"></script>

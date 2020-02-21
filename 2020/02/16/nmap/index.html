@@ -46,12 +46,12 @@
   };
 </script>
 
-  <meta name="description" content="输入nmap -h 后会显示帮助页面 类似于man nmap。  -sT 参数功能名称为TCP connect扫描，即当SYN扫描不能用时，TCP connect扫描就是默认的TCP扫描。优先级次于SYN扫描。根据nmap手册的部分功能注释： -sT 目标ip  -sS 参数功能名称为TCP SYN扫描，即为默认的TCP connect扫描。根据nmap手册的注释：">
+  <meta name="description" content="老师要求我们了解nmap的参数，我就做了一些简单的了解。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nmap部分参数">
 <meta property="og:url" content="https://kkotori.github.io/2020/02/16/nmap/index.html">
 <meta property="og:site_name" content="WS">
-<meta property="og:description" content="输入nmap -h 后会显示帮助页面 类似于man nmap。  -sT 参数功能名称为TCP connect扫描，即当SYN扫描不能用时，TCP connect扫描就是默认的TCP扫描。优先级次于SYN扫描。根据nmap手册的部分功能注释： -sT 目标ip  -sS 参数功能名称为TCP SYN扫描，即为默认的TCP connect扫描。根据nmap手册的注释：">
+<meta property="og:description" content="老师要求我们了解nmap的参数，我就做了一些简单的了解。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kkotori.github.io/2020/02/16/nmap/image001.jpg">
 <meta property="og:image" content="https://kkotori.github.io/2020/02/16/nmap/image002.jpg">
@@ -68,7 +68,7 @@
 <meta property="og:image" content="https://kkotori.github.io/2020/02/16/nmap/image013.jpg">
 <meta property="og:image" content="https://kkotori.github.io/2020/02/16/nmap/image014.jpg">
 <meta property="article:published_time" content="2020-02-16T08:49:53.000Z">
-<meta property="article:modified_time" content="2020-02-16T09:17:11.820Z">
+<meta property="article:modified_time" content="2020-02-21T11:24:45.362Z">
 <meta property="article:author" content="K_Kotori">
 <meta property="article:tag" content="StudyM">
 <meta name="twitter:card" content="summary">
@@ -154,6 +154,16 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
@@ -207,9 +217,26 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-16 16:49:53 / 修改时间：17:17:11" itemprop="dateCreated datePublished" datetime="2020-02-16T16:49:53+08:00">2020-02-16</time>
+              <time title="创建时间：2020-02-16 16:49:53" itemprop="dateCreated datePublished" datetime="2020-02-16T16:49:53+08:00">2020-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-21 19:24:45" itemprop="dateModified" datetime="2020-02-21T19:24:45+08:00">2020-02-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/StudyM/" itemprop="url" rel="index">
+                    <span itemprop="name">StudyM</span>
+                  </a>
+                </span>
             </span>
 
           
@@ -282,6 +309,8 @@ div.WordSection1
 
 <div class=WordSection1 style='layout-grid:15.6pt'>
 
+<p>老师要求我们了解nmap的参数，我就做了一些简单的了解。</p>
+<a id="more"></a>
 <p>输入<span lang=EN-US>nmap -h </span>后会显示帮助页面 类似于<span lang=EN-US>man nmap</span>。</p>
 <p><span lang=EN-US><img src="/2020/02/16/nmap/image001.jpg" class=""></span></p>
 <p><span lang=EN-US>-sT </span>参数功能名称为<span lang=EN-US>TCP connect</span>扫描，即当<span lang=EN-US>SYN</span>扫描不能用时，<span lang=EN-US>TCP connect</span>扫描就是默认的<span lang=EN-US>TCP</span>扫描。优先级次于<span lang=EN-US>SYN</span>扫描。根据<span lang=EN-US>nmap</span>手册的部分功能注释：</p>
@@ -444,9 +473,17 @@ lang=EN-US>nmap</span>手册的功能注释：</p>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
-      <div class="site-state-item site-state-tags">
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">3</span>
-        <span class="site-state-item-name">标签</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -535,3 +572,4 @@ lang=EN-US>nmap</span>手册的功能注释：</p>
 
 <script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
 </html>
+<script type="text/javascript" src="/custom/dynamic_title.js"></script>
