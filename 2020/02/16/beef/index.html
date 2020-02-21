@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://KKotori.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="先大致了解下Beef，以后可能会用到。 Beef工作机制：在beef上有一个叫zombie的东西，即受害浏览器。zombie是被hook（勾连）的，如果受害浏览器访问了有勾子（由js编写）的页面，就会被hook，勾连的浏览器会执行初始代码返回一些信息，接着zombie会每隔一段时间（默认为1秒）就会向BeeF服务器发送一个请求，询问是否有新的代码需要执行。BeeF服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Beef基础使用">
+<meta property="og:url" content="https://kkotori.github.io/2020/02/16/beef/index.html">
+<meta property="og:site_name" content="WS">
+<meta property="og:description" content="先大致了解下Beef，以后可能会用到。 Beef工作机制：在beef上有一个叫zombie的东西，即受害浏览器。zombie是被hook（勾连）的，如果受害浏览器访问了有勾子（由js编写）的页面，就会被hook，勾连的浏览器会执行初始代码返回一些信息，接着zombie会每隔一段时间（默认为1秒）就会向BeeF服务器发送一个请求，询问是否有新的代码需要执行。BeeF服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image001.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image002.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image003.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image004.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image005.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image006.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image007.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image008.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image009.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image010.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image011.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/16/beef/image012.jpg">
+<meta property="article:published_time" content="2020-02-16T06:34:31.000Z">
+<meta property="article:modified_time" content="2020-02-16T07:56:35.680Z">
+<meta property="article:author" content="K_Kotori">
+<meta property="article:tag" content="StudyM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kkotori.github.io/2020/02/16/beef/image001.jpg">
+
+<link rel="canonical" href="https://kkotori.github.io/2020/02/16/beef/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Beef基础使用 | WS</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kkotori.github.io/2020/02/16/beef/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="K_Kotori">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Beef基础使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-16 14:34:31 / 修改时间：15:56:35" itemprop="dateCreated datePublished" datetime="2020-02-16T14:34:31+08:00">2020-02-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+        {font-family:宋体;
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:"Cambria Math";
+        panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+        {font-family:等线;
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:"\@等线";
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:"\@宋体";
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+        {margin:0cm;
+        margin-bottom:.0001pt;
+        text-align:justify;
+        text-justify:inter-ideograph;
+        font-size:10.5pt;
+        font-family:等线;}
+pre
+        {mso-style-link:"HTML 预设格式 字符";
+        margin:0cm;
+        margin-bottom:.0001pt;
+        font-size:12.0pt;
+        font-family:宋体;}
+span.HTML
+        {mso-style-name:"HTML 预设格式 字符";
+        mso-style-link:"HTML 预设格式";
+        font-family:宋体;}
+span.hljs-comment
+        {mso-style-name:hljs-comment;}
+.MsoChpDefault
+        {font-family:等线;}
+ /* Page Definitions */
+ @page WordSection1
+        {size:595.3pt 841.9pt;
+        margin:72.0pt 90.0pt 72.0pt 90.0pt;
+        layout-grid:15.6pt;}
+div.WordSection1
+        {page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN style='text-justify-trim:punctuation'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<p>先大致了解下Beef，以后可能会用到。</p>
+<p><span lang=EN-US>Beef</span>工作机制：在<span lang=EN-US>beef</span>上有一个叫<span lang=EN-US>zombie</span>的东西，即受害浏览器。<span lang=EN-US>zombie</span>是被<span lang=EN-US>hook</span>（勾连）的，如果受害浏览器访问了有勾子（由<span lang=EN-US>js</span>编写）的页面，就会被<span
+lang=EN-US>hook</span>，勾连的浏览器会执行初始代码返回一些信息，接着<span lang=EN-US>zombie</span>会每隔一段时间（默认为<span lang=EN-US>1</span>秒）就会向<span lang=EN-US>BeeF</span>服务器发送一个请求，询问是否有新的代码需要执行。<span lang=EN-US>BeeF</span>服务器本质上就像一个<span lang=EN-US>Web</span>应用，被分为前端<span lang=EN-US>UI</span>，和后端。前端会轮询后端是否有新的数据需要更新，同时前端也可以向后端发送指示，<span lang=EN-US>BeeF</span>持有者可以通过浏览器来登录<span lang=EN-US>BeeF </span>的后台管理<span lang=EN-US>UI</span>。</p>
+<p>打开<span lang=EN-US>kali2</span>虚拟机，找到<span lang=EN-US>beef-xss framework</span>。</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image001.jpg" class=""></span></p>
+<p>点击进入提示需要更改密码。</p>
+<p>先<span lang=EN-US>cat /etc/beef-xss/config.yaml</span>查看<span lang=EN-US>,</span>之后使用<span lang=EN-US>vim</span>来修改。<span lang=EN-US>Vim <span class=hljs-comment>/etc/beef-xss/config.yaml</span></span><span lang=EN-US><img src="/2020/02/16/beef/image002.jpg" class=""></span>先按下<span lang=EN-US>i</span>键，进入插入模式，修改密码用户名如图，再输入<span lang=EN-US>:wq</span>完成写入保存。再次打开<span lang=EN-US>beef-xss</span>。<span lang=EN-US><img src="/2020/02/16/beef/image003.jpg" class=""></span><span lang=EN-US><img src="/2020/02/16/beef/image004.jpg" class=""></span></p>
+<p>输入用户名密码登陆即可。</p>
+<p>按照其说明在浏览器输入<span lang=EN-US>URL</span>，查询自己<span lang=EN-US>ip</span>为<span lang=EN-US>10.0.2.15</span></p>
+<p>在浏览器输入<span lang=EN-US>10.0.2.15:3000/demos/butcher/index.html</span></p>
+<p><span lang=EN-US>Ps</span>：我们可以通过访问<span lang=EN-US>10.0.2.15:3000/hook.js</span>来查看<span lang=EN-US>js</span>脚本。</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image005.jpg" class=""></span></p>
+<p>我们先来尝试一些功能，比如页面篡改</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image006.jpg" class=""></span></p>
+<p>用重定向将<span lang=EN-US>beef</span>默认页面篡改成<span lang=EN-US>baidu.com</span>。执行之后如下图</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image007.jpg" class=""></span></p>
+<p>发现不管访问什么<span lang=EN-US>URL</span>都是<span lang=EN-US>10.0.2.15:3000/demos/butcher/index.html</span></p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image008.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image009.jpg" class=""></span></p>
+<p>查看<span lang=EN-US>beef</span>日志，发现连鼠标点击操作的位置都被记录了。</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image010.jpg" class=""></span></p>
+<p>接下来再尝试进行端口扫描，填入目标<span lang=EN-US>ip</span>。</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image011.jpg" class=""></span></p>
+<p>等待过后，看到部分回显。</p>
+<p><span lang=EN-US><img src="/2020/02/16/beef/image012.jpg" class=""></span></p>
+<p><span lang=EN-US>&nbsp;</span></p>
+<p><span lang=EN-US>&nbsp;</span></p>
+<p>总结：经过探索，发现<span lang=EN-US>beef</span>仍有许多许多功能可以实现。只要受害者访问带有<span lang=EN-US>hook</span>的页面，就会被勾连，<span lang=EN-US>beef</span>可以对其进行持续化控制，通过快速与<span lang=EN-US>zombie</span>之间通信交互，实现对<span lang=EN-US>zombie</span>的控制。总的来说<span lang=EN-US>beef</span>是一个很强大的基于浏览器框架攻击的集成工具。</p>
+</div>
+
+<script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script><script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+
+</html>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/StudyM/" rel="tag"># StudyM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/16/nes/" rel="prev" title="Nessus简单使用">
+      <i class="fa fa-chevron-left"></i> Nessus简单使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/16/beefu/" rel="next" title="Beef的利用">
+      Beef的利用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">K_Kotori</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">K_Kotori</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>

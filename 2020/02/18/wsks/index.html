@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('https://KKotori.github.io').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="SQLI：本次WEB实验采用kali2的环境。由Linux的一些原因数据库并未采用MySQL，而是采用了其分支MariaDB，因此经过简单的MariaDB的学习，开始此实验。 首先将环境配置好，并简单的写了一个用于测试SQLI的网页。 毫无WAF的代码如下：  然后我们先在数据库内添加我们能需要查询的东西  添加完成后 打开http:&#x2F;&#x2F;127.0.0.1&#x2F;sqlc.ph">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单SQLI、XSS建站漏洞修复&amp;DVWA&amp;少数RE基础">
+<meta property="og:url" content="https://kkotori.github.io/2020/02/18/wsks/index.html">
+<meta property="og:site_name" content="WS">
+<meta property="og:description" content="SQLI：本次WEB实验采用kali2的环境。由Linux的一些原因数据库并未采用MySQL，而是采用了其分支MariaDB，因此经过简单的MariaDB的学习，开始此实验。 首先将环境配置好，并简单的写了一个用于测试SQLI的网页。 毫无WAF的代码如下：  然后我们先在数据库内添加我们能需要查询的东西  添加完成后 打开http:&#x2F;&#x2F;127.0.0.1&#x2F;sqlc.ph">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image001.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image002.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image003.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image004.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image005.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image006.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image007.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image008.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image009.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image010.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image011.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image012.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image013.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image014.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image015.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image016.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image017.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image018.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image019.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image020.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image021.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image022.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image023.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image024.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image025.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image026.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image027.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image028.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image029.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image030.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image031.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image032.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image033.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image034.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image035.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image036.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image037.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image038.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image039.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image040.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image041.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image042.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image043.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image044.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image045.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image046.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image047.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image048.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image049.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image050.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image051.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image052.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image053.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image054.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image055.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image056.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image057.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image058.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image059.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image060.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image061.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image062.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image063.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image064.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image065.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image066.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image067.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image068.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image069.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image070.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image071.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image072.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image073.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image074.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image075.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image076.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image077.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image078.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image079.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image080.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image081.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image082.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image083.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image084.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image085.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image086.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image087.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image088.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image089.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image090.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image091.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image092.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image093.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image094.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image095.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image096.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image097.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image098.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image099.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image100.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image101.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image101.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image102.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image103.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image104.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image105.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image106.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image107.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image108.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image109.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image110.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image111.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image112.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image113.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image114.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image115.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image116.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image117.jpg">
+<meta property="og:image" content="https://kkotori.github.io/2020/02/18/wsks/image118.jpg">
+<meta property="article:published_time" content="2020-02-18T06:35:17.000Z">
+<meta property="article:modified_time" content="2020-02-18T08:16:19.080Z">
+<meta property="article:author" content="K_Kotori">
+<meta property="article:tag" content="StudyM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kkotori.github.io/2020/02/18/wsks/image001.jpg">
+
+<link rel="canonical" href="https://kkotori.github.io/2020/02/18/wsks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>简单SQLI、XSS建站漏洞修复&DVWA&少数RE基础 | WS</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WS</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kkotori.github.io/2020/02/18/wsks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="K_Kotori">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WS">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简单SQLI、XSS建站漏洞修复&DVWA&少数RE基础
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-18 14:35:17 / 修改时间：16:16:19" itemprop="dateCreated datePublished" datetime="2020-02-18T14:35:17+08:00">2020-02-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+        {font-family:宋体;
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:黑体;
+        panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+        {font-family:"Cambria Math";
+        panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+        {font-family:等线;
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:"等线 Light";
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:华文中宋;
+        panose-1:2 1 6 0 4 1 1 1 1 1;}
+@font-face
+        {font-family:"\@宋体";
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:"\@华文中宋";}
+@font-face
+        {font-family:"\@黑体";
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+        {font-family:"\@等线 Light";}
+@font-face
+        {font-family:"\@等线";
+        panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+        {margin:0cm;
+        margin-bottom:.0001pt;
+        font-size:12.0pt;
+        font-family:宋体;}
+h1
+        {mso-style-link:"标题 1 字符";
+        margin-top:17.0pt;
+        margin-right:0cm;
+        margin-bottom:16.5pt;
+        margin-left:0cm;
+        text-align:justify;
+        text-justify:inter-ideograph;
+        line-height:240%;
+        page-break-after:avoid;
+        font-size:22.0pt;
+        font-family:等线;
+        font-weight:bold;}
+h2
+        {mso-style-link:"标题 2 字符";
+        margin-top:13.0pt;
+        margin-right:0cm;
+        margin-bottom:13.0pt;
+        margin-left:0cm;
+        text-align:justify;
+        text-justify:inter-ideograph;
+        line-height:173%;
+        page-break-after:avoid;
+        font-size:16.0pt;
+        font-family:"等线 Light";
+        font-weight:bold;}
+h3
+        {mso-style-link:"标题 3 字符";
+        margin-top:13.0pt;
+        margin-right:0cm;
+        margin-bottom:13.0pt;
+        margin-left:0cm;
+        text-align:justify;
+        text-justify:inter-ideograph;
+        line-height:173%;
+        page-break-after:avoid;
+        font-size:16.0pt;
+        font-family:等线;
+        font-weight:bold;}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+        {margin:0cm;
+        margin-bottom:.0001pt;
+        font-size:18.0pt;
+        font-family:黑体;}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+        {margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        margin-left:24.0pt;
+        margin-bottom:.0001pt;
+        font-size:15.0pt;
+        font-family:黑体;}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+        {margin-top:0cm;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        margin-left:48.0pt;
+        margin-bottom:.0001pt;
+        font-size:14.0pt;
+        font-family:黑体;}
+a:link, span.MsoHyperlink
+        {color:#0563C1;
+        text-decoration:underline;}
+p
+        {margin-right:0cm;
+        margin-left:0cm;
+        font-size:12.0pt;
+        font-family:宋体;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+        {margin:0cm;
+        margin-bottom:.0001pt;
+        text-indent:21.0pt;
+        font-size:12.0pt;
+        font-family:宋体;}
+p.MsoTocHeading, li.MsoTocHeading, div.MsoTocHeading
+        {margin-top:12.0pt;
+        margin-right:0cm;
+        margin-bottom:0cm;
+        margin-left:0cm;
+        margin-bottom:.0001pt;
+        line-height:107%;
+        page-break-after:avoid;
+        font-size:16.0pt;
+        font-family:"等线 Light";
+        color:#2E74B5;}
+span.1
+        {mso-style-name:"标题 1 字符";
+        mso-style-link:"标题 1";
+        font-weight:bold;}
+span.2
+        {mso-style-name:"标题 2 字符";
+        mso-style-link:"标题 2";
+        font-family:"等线 Light";
+        font-weight:bold;}
+span.3
+        {mso-style-name:"标题 3 字符";
+        mso-style-link:"标题 3";
+        font-weight:bold;}
+.MsoChpDefault
+        {font-family:等线;}
+ /* Page Definitions */
+ @page WordSection1
+        {size:595.3pt 841.9pt;
+        margin:72.0pt 90.0pt 72.0pt 90.0pt;
+        layout-grid:16.3pt;}
+div.WordSection1
+        {page:WordSection1;}
+ /* List Definitions */
+ ol
+        {margin-bottom:0cm;}
+ul
+        {margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN link="#0563C1" vlink="#954F72" style='text-justify-trim:punctuation'>
+
+<h2 id="SQLI："><a href="#SQLI：" class="headerlink" title="SQLI："></a><a name="_Toc26366735"><span style='font-size:15.0pt;font-family:黑体'>SQLI：</span></a></h2><p>本次<span
+lang=EN-US>WEB</span>实验采用<span lang=EN-US>kali2</span>的环境。由<span lang=EN-US>Linux</span>的一些原因数据库并未采用<span lang=EN-US>MySQL</span>，而是采用了其分支<span lang=EN-US>MariaDB</span>，因此经过简单的<span
+lang=EN-US>MariaDB</span>的学习，开始此实验。</p>
+<p>首先将环境配置好，并简单的写了一个用于测试<span lang=EN-US>SQLI</span>的网页。</p>
+<p>毫无<span lang=EN-US>WAF</span>的代码如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image001.jpg" class=""></span></p>
+<p>然后我们先在数据库内添加我们能需要查询的东西</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image002.jpg" class=""><img src="/2020/02/18/wsks/image003.jpg" class=""><img src="/2020/02/18/wsks/image004.jpg" class=""></span></p>
+<p>添加完成后</p>
+<p>打开<span lang=EN-US><a href="http://127.0.0.1/sqlc.php" target="_blank" rel="noopener"><span style='color:windowtext;text-decoration:none'>http://127.0.0.1/sqlc.php</span></a></span></p>
+<h3 id="整型注入"><a href="#整型注入" class="headerlink" title="整型注入"></a><a name="_Toc26366736"><span style='font-size:14.0pt;font-family:黑体'>整型注入</span></a></h3><p><span lang=EN-US><img src="/2020/02/18/wsks/image005.jpg" class=""></span></p>
+<h3 id="字符注入"><a href="#字符注入" class="headerlink" title="字符注入"></a><a name="_Toc26366737"><span style='font-size:14.0pt;font-family:黑体'>字符注入</span></a></h3><p>稍微修改代码</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image006.jpg" class=""></span></p>
+<p>再进行字符注入</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image007.jpg" class=""></span></p>
+<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a><a name="_Toc26366738"><span style='font-size:14.0pt;font-family:黑体'>布尔盲注</span></a></h3><p>接下来按照课本要求简单复现：</p>
+<p>布尔型注入查询数据库版本</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image008.jpg" class=""></span></p>
+<p>此处没有回显，说明语句判断结果为<span lang=EN-US>false</span>，则查询语句会等价为<span
+lang=EN-US>?x=20 and 0</span>，则不执行查询操作。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image009.jpg" class=""></span></p>
+<p>没有回显，继续尝试。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image010.jpg" class=""></span></p>
+<p>有回显，此时语句等价为<span lang=EN-US>?x=20<br>and 1</span>，则执行查询，并回显。确认数据库版本号为<span lang=EN-US>1</span>。</p>
+<p>关于盲注，我们再进行测试的时候一般辅助以脚本，因为其操作过程重复度太高。这里简单写了一个脚本来进行上面的盲注测试。脚本如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image011.jpg" class=""></span></p>
+<h3 id="延时注入"><a href="#延时注入" class="headerlink" title="延时注入"></a><a name="_Toc26366739"><span style='font-size:14.0pt;font-family:黑体'>延时注入</span></a></h3><p><span lang=EN-US><img src="/2020/02/18/wsks/image012.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image013.jpg" class=""></span></p>
+<p>回车之后，查询会先查询<span lang=EN-US>x=20</span>，之后因为<span
+lang=EN-US>and</span>存在会将后面的语句也执行，延时三秒回显，确实可以达到延时效果。将<span lang=EN-US>and</span>改为<span
+lang=EN-US>or</span>也可以实现延时，但是会有结果回显。</p>
+<h3 id="报错型注入"><a href="#报错型注入" class="headerlink" title="报错型注入"></a><a name="_Toc26366740"><span style='font-size:14.0pt;font-family:黑体'>报错型注入</span></a></h3><p>这类型的注入效果实际得看回显内容的多少，像是我们为了实验而搭建的代码一般不会加过滤或是除了查询目标值回显之外，根本就不会去写回显语句。为了实现报错注入，使用了一个<span
+lang=EN-US>mysqli_error()</span>函数。效果如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image014.jpg" class=""></span></p>
+<p>在<span lang=EN-US>?x=20</span>后面加一个单引号会导致引号不能成对而无法匹配，导致数据库报错并通过函数回显错误信息。上面仅仅是一个函数，我们就能通过其报错知道两个重要信息：<span
+lang=EN-US>1</span>、数据库类型为<span lang=EN-US>MariaDB</span>。<span lang=EN-US>2</span>、具体过滤了什么字符。（<span
+lang=EN-US>WAF</span>测试）</p>
+<h3 id="综合注入攻击"><a href="#综合注入攻击" class="headerlink" title="综合注入攻击"></a><a name="_Toc26366741"><span style='font-size:14.0pt;font-family:黑体'>综合注入攻击</span></a></h3><p>结合书上的方法，简单模拟一次攻击。</p>
+<p>由以上报错、布尔、延时注入我们已经知道数据库为<span
+lang=EN-US>MariaDB</span>，基本没有字符过滤（这是当然的了），语句可以通过关键词组合查询语句，那我们可以使用<span
+lang=EN-US>union</span>进行联合查询。</p>
+<p>那我们开始尝试爆库</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image015.jpg" class=""></span></p>
+<p>我搭建的<span lang=EN-US>sqli</span>，所以我们爆<span lang=EN-US>sqli</span>表</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image016.jpg" class=""></span></p>
+<p>继续爆字段</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image017.jpg" class=""></span></p>
+<p>过程没什么好解释的，就是一些<span lang=EN-US>MariaDB</span>的基本查询语句。</p>
+<p>修复以上漏洞</p>
+<p>接下来进行以上漏洞修复。</p>
+<p>首先，对于报错注入，我们可以将代码中的回显语句完全去掉。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image018.jpg" class=""></span></p>
+<p>或者是限制其回显，这样可以极大提高盲注的难度。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image019.jpg" class=""></span></p>
+<p>对于有用户需求的客户端或者是站点来说，回显过于具体会方便入侵，但是完全没有回显对于用户来说也不是好事，这样会使用户体验很差。因此我们一般采取限制其回显内容来防范这类问题。</p>
+<p>之后，对于用户能控制的语句和变量，我们需要对其进行过滤来防止恶意语句的传递（<span
+lang=EN-US>WAF</span>）。</p>
+<p>首先我们知道攻击者可能会通过关键词组合攻击语句。那么我们可以对关键词进行过滤，并过滤部分函数。再严格一些，限制输入类型（过滤大小写）。加入简单正则后的代码如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image020.jpg" class=""></span></p>
+<p>效果如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image021.jpg" class=""></span></p>
+<p>会将非法字符进行匹配从而阻止非法语句进入数据库。但是这并不是过滤，而是在发现非法字符之后直接阻止了程序的执行。</p>
+<p>将代码逻辑整理一下，最终代码如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image022.jpg" class=""></span></p>
+<p>除了上述方法之外，我们还可采用<span lang=EN-US>MySQL</span>降权与预编译语句的方法。我上面的代码中的<span
+lang=EN-US>dvwau</span>是拥有所有权限的一个角色。将这样的角色交给用户并不是很安全，因此我们在数据库中操作，将<span
+lang=EN-US>dvwau</span>的权限拿掉，只留下部分即可。预编译的话，是预先定义好<span lang=EN-US>sql</span>的查询语句，先用？符号占位，待用户传入参数之后，即可执行。这与一般的查询不一样，预编译是先将语句进入<br>数据库中，之后再传入参数。而现在的做法大多数为等查询语句拼接好之后，再传入数据库执行。形式如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image023.jpg" class=""></span></p>
+<p>不同数据库有不同的查询语句，那么随之而来的问题肯定也不一样，<span
+lang=EN-US>mysql</span>是这样的，其他的不一定是这样。网上搜索了一番，还发现了一种防御方法也就是现在认为比较安全的方法<span
+lang=EN-US>PDO</span>。</p>
+<p><span lang=EN-US>PHP </span>数据对象（<span
+lang=EN-US>PDO</span>） 扩展为<span lang=EN-US>PHP</span>访问数据库定义了一个轻量级的一致接口。实现<span
+lang=EN-US> PDO </span>接口的每个数据库驱动可以公开具体数据库的特性作为标准扩展功能。 注意利用<span lang=EN-US><br>PDO </span>扩展自身并不能实现任何数据库功能；必须使用一个具体数据库的<span lang=EN-US> PDO </span>驱动来访问数据库服务。</p>
+<p><span lang=EN-US>PDO </span>提供了一个数据访问抽象层，这意味着，不管使用哪种数据库，都可以用相同的函数（方法）来查询和获取数据。<span
+lang=EN-US> PDO</span>不提供数据库抽象层；它不会重写<span lang=EN-US> SQL</span>，也不会模拟缺失的特性。如果需要的话，应该使用一个成熟的抽象层。</p>
+<p>从<span lang=EN-US> PHP 5.1</span>开始附带了<span
+lang=EN-US> PDO</span>，在<span lang=EN-US> PHP 5.0 </span>中是作为一个<span
+lang=EN-US> PECL </span>扩展使用。<span lang=EN-US>PDO </span>需要<span lang=EN-US>PHP<br>5</span>核心的新<span lang=EN-US>OO</span>特性，因此不能在较早版本的<span lang=EN-US> PHP </span>上运行。其实<span
+lang=EN-US>PDO</span>也才采用了预编译的方法来增强查询语句的安全。</p>
+<p><span lang=EN-US>PDO</span>划清了用户输入与代码的界限，不会将用户输入与查询语句进行拼接。关于<span
+lang=EN-US>PDO</span>的使用方法，如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image024.jpg" class=""></span></p>
+<h2 id="Xss："><a href="#Xss：" class="headerlink" title="Xss："></a><a name="_Toc26366742"><span style='font-size:15.0pt;font-family:黑体'>Xss：</span></a></h2><p>先写个简单的前端和后端的代码</p>
+<h3 id="Xss-Reflected"><a href="#Xss-Reflected" class="headerlink" title="Xss_Reflected"></a><a name="_Toc26366743"><span style='font-size:14.0pt;font-family:黑体'>Xss_Reflected</span></a></h3><p><span lang=EN-US><img src="/2020/02/18/wsks/image025.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image026.jpg" class=""></span></p>
+<p>效果如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image027.jpg" class=""></span></p>
+<p>简单测试一下<span lang=EN-US>&lt;script&gt;alert(1)&lt;/script&gt;</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image028.jpg" class=""></span></p>
+<p>成功弹窗，此类行为反射型<span lang=EN-US>XSS</span>漏洞。</p>
+<h3 id="Xss-Stored"><a href="#Xss-Stored" class="headerlink" title="Xss_Stored:"></a><a name="_Toc26366744"><span style='font-size:14.0pt;font-family:黑体'>Xss_Stored:</span></a></h3><p>我们稍微修改一下代码，进行存储型<span lang=EN-US>XSS</span>漏洞测试。我拿前面自己写的<span
+lang=EN-US>SQLI</span>页面来用一用。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image029.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image030.jpg" class=""></span></p>
+<p>效果如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image031.jpg" class=""></span></p>
+<p>来测试一下。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image032.jpg" class=""></span></p>
+<p>成功弹窗，在<span lang=EN-US>Stored</span>型<span
+lang=EN-US>XSS</span>中，我们一旦注入恶意代码成功，那么每次我们访问此页面时服务器都会将我们注入数据库的恶意代码拿出来当作<span
+lang=EN-US>script</span>再解析并执行一遍，这就是<span lang=EN-US>Stored</span>型的特点。</p>
+<h3 id="Xss-DOM"><a href="#Xss-DOM" class="headerlink" title="Xss_DOM:"></a><a name="_Toc26366745"><span style='font-size:14.0pt;font-family:黑体'>Xss_DOM:</span></a></h3><p>我们再稍微修改一下代码，尝试实现<span lang=EN-US>DOM</span>型漏洞</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image033.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image034.jpg" class=""></span>效果如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image035.jpg" class=""></span></p>
+<p>测试一下</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image036.jpg" class=""></span></p>
+<p>成功弹窗，利用成功。到这里基础<span lang=EN-US>XSS</span>代码都复现完了。</p>
+<h3 id="漏洞修复："><a href="#漏洞修复：" class="headerlink" title="漏洞修复："></a><a name="_Toc26366746"><span style='font-size:14.0pt;font-family:黑体'>漏洞修复：</span></a></h3><p>我们开始考虑如何修复这些漏洞。</p>
+<p>反射型与<span lang=EN-US>DOM</span>型漏洞都为非持久化漏洞，而<span
+lang=EN-US>Stored</span>型持久化漏洞。</p>
+<p><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>DOM<br>&amp; Reflected</span></p>
+<p>首先针对反射型漏洞与<span lang=EN-US>DOM</span>型漏洞，其利用原理是在用户进行数据提交的时候，服务器端将传入的数据当作<span
+lang=EN-US>html</span>元素进行了解析，<span lang=EN-US>html</span>元素可包括<span
+lang=EN-US>js</span>脚本，也就意味着可以执行恶意代码。如果需要对其进行修复的话，在当我们需要向<span lang=EN-US>html</span>标签之间插入不可信数据的时候，我们可以对其进行<span
+lang=EN-US>HTML Entity </span>编码以及特殊字符的过滤，比如将空格转换为<span lang=EN-US>&amp;nbsp ;</span>、<span
+lang=EN-US>&lt;</span>转换为<span lang=EN-US>&amp;lt ;</span>等，在进行转义时，不能单纯的将“转为<span
+lang=EN-US>\”</span>而是要用<span lang=EN-US>/\”</span>这种方式，或者将除了字母和数字以外的东西全部使用十六进制的编码方式进行编码。<span
+lang=EN-US>Php</span>提供了<span lang=EN-US>htmlspecialchars</span>（）函数将输入进行转义变为<span
+lang=EN-US>HTML</span>实体编码。</p>
+<p><span lang=EN-US style='font-size:14.0pt'>DOM</span><span style='font-size:14.0pt'>：</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image037.jpg" class=""></span></p>
+<p><span lang=EN-US style='font-size:14.0pt'>REFLECT</span><span style='font-size:14.0pt'>：</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image038.jpg" class=""></span></p>
+<p>效果如下：</p>
+<p><span lang=EN-US style='font-size:14.0pt'>DOM</span><span style='font-size:14.0pt'>：</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image039.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image040.jpg" class=""></span></p>
+<p><span lang=EN-US style='font-size:
+14.0pt'>REFLECTED</span><span style='font-size:14.0pt'>：</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image041.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image042.jpg" class=""></span></p>
+<p>更进一步，因为<span lang=EN-US>XSS</span>操作大多数为盗取用户<span
+lang=EN-US>cookie</span>，我们可以设置一个<span lang=EN-US>HttpOnly</span>，避免脚本对<span
+lang=EN-US>cookie</span>的访问。</p>
+<p><span style='font-size:14.0pt;font-family:黑体'>Stored:</span></p>
+<p>对于<span lang=EN-US>STORED</span>型，我们采取方法也可以是加上<span
+lang=EN-US>HTML</span>实体转义，也要在进行数据库操作的时候进行防范，我可以加入上面的<span lang=EN-US>SQLI</span>的代码。</p>
+<p>代码如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image043.jpg" class=""></span></p>
+<p>效果如下：</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image044.jpg" class=""></span></p>
+<p>不过总的来说，没有绝对安全的防御，当我们引入<span
+lang=EN-US>HTML</span>实体的时候又会带来新的<span lang=EN-US>XXE</span>、<span lang=EN-US>SSRF</span>等问题，不过这不属于课程作业的内容，有机会再做<span
+lang=EN-US>XXE</span>攻击和防御测试。</p>
+<h2 id="DVWA漏洞攻击实现："><a href="#DVWA漏洞攻击实现：" class="headerlink" title="DVWA漏洞攻击实现："></a><a name="_Toc26366747"><span style='font-size:15.0pt;font-family:黑体'>DVWA漏洞攻击实现：</span></a></h2><p>由于是闯关，我就当作写<span lang=EN-US>WP</span>来写了。</p>
+<h3 id="LOW"><a href="#LOW" class="headerlink" title="LOW:"></a><a name="_Toc26366748"><span style='font-size:14.0pt;font-family:黑体'>LOW:</span></a></h3><p><span style='font-size:14.0pt;font-family:黑体'>Brute Force：</span></p>
+<p>用<span
+lang=EN-US>Burpsuit</span>截包，然后发送至<span lang=EN-US>intruder</span>：</p>
+<p>锁定爆破点</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image045.jpg" class=""></span></p>
+<p>选择字典</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image046.jpg" class=""></span>或是进行爆破</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image047.jpg" class=""></span></p>
+<p><span
+lang=EN-US>Start Attack</span>即可。</p>
+<p>都可以得到密码：<span
+lang=EN-US>password</span>。</p>
+<p><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>SQLI:</span></p>
+<p>这里先随手一试<span
+lang=EN-US>1’ or 1=1 –+’</span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image048.jpg" class=""></span></p>
+<p>没有任何过滤，简单的闭合单引号并且注释掉后面的语句即可。</p>
+<p><span style='font-size:14.0pt;font-family:黑体'>SQLBI:</span></p>
+<p>先输入<span
+lang=EN-US>1</span>‘ <span lang=EN-US>and substring(version(),1,1)&gt;5 –’,</span>回显</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image049.jpg" class=""></span></p>
+<p>再输入<span
+lang=EN-US>1</span>‘ <span lang=EN-US>and substring(version(),1,1)&lt;5 –’,</span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image050.jpg" class=""></span></p>
+<p>逐次尝试<span
+lang=EN-US>&lt;4,3,2,1</span>，到<span lang=EN-US>1</span>的时候回显</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image051.jpg" class=""></span></p>
+<p>则再尝试<span
+lang=EN-US>1</span>‘ <span lang=EN-US>and substring(version(),1,1)=1 –’,</span>回显</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image052.jpg" class=""></span></p>
+<p>则可确定数据库版本为<span
+lang=EN-US>1</span>。</p>
+<p>用同样的方法则可以逐个确定表名，列名，字段名。贴上脚本</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image053.jpg" class=""></span></p>
+<p><span style='font-size:14.0pt;font-family:黑体'>Xss_Reflected：</span></p>
+<p>输入<span
+lang=EN-US>&lt;script&gt;alert(‘1’)&lt;/script&gt;</span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image054.jpg" class=""></span></p>
+<p><span style='font-size:14.0pt;font-family:黑体'>Xss_Stored:</span></p>
+<p>先输入</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image055.jpg" class=""></span></p>
+<p>提交之后可以看到</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image056.jpg" class=""></span></p>
+<h3 id="Medium："><a href="#Medium：" class="headerlink" title="Medium："></a><a name="_Toc26366749"><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>Medium</span></a><span style='font-size:14.0pt;font-family:黑体'>：</span></h3><p><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>Brute Force</span><span style='font-size:14.0pt;font-family:黑体'>：</span></p>
+<p>提交密码之后发现页面回显很慢，猜测可能有延迟，一看代码果不其然。</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image057.jpg" class=""></span></p>
+<p>可以修改<span
+lang=EN-US>burp suit</span>里<span lang=EN-US>intruder</span>的<span lang=EN-US>option</span>设置进行调整。</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image058.jpg" class=""></span></p>
+<p><span style='font-size:14.0pt;font-family:黑体'>SQLI:</span></p>
+<p>看到页面变成固定列表了，不能自己输入值了</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image059.jpg" class=""></span>看源码</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image060.jpg" class=""></span>发现传参方式变为了<span lang=EN-US>POST</span>，那么我们抓包修改<span
+lang=EN-US>id</span>的值再提交。</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image061.jpg" class=""></span></p>
+<p>成功，接下来的步骤与之前的一致，可以使用联合注入，不再重复。</p>
+<p><span style='font-size:14.0pt;font-family:黑体'>SQLBI:</span></p>
+<p>和<span
+lang=EN-US>SQLI</span>很像，估计也是需要抓包，那我们用<span lang=EN-US>burp</span>尝试。</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image062.jpg" class=""></span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image063.jpg" class=""></span></p>
+<p>发现可以进行盲注，基本没有过滤。</p>
+<p>用脚本不好实现，我们可以用利用<span
+lang=EN-US>burp</span>的<span lang=EN-US>intruder</span>功能，先进行如下设置</p>
+<p>标记爆破点</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image064.jpg" class=""></span></p>
+<p>对<span
+lang=EN-US>payload</span>进行设置，上面我们需要爆破数据库版本，所以设置<span lang=EN-US>payload</span>类型为数字，<span
+lang=EN-US>&nbsp; </span>范围为<span lang=EN-US>1~128</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image065.jpg" class=""></span></p>
+<p><span
+lang=EN-US>Start attack</span>的结果</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image066.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image067.jpg" class=""></span></p>
+<p>会发现有个响应的长度明显比其他的短，那是因为长度为<span
+lang=EN-US>4996</span>的那个响应里包含了<span lang=EN-US>exists</span>而长度为<span
+lang=EN-US>5002</span>的里面包含了<span lang=EN-US>MISSING</span>所以有长度差别。我们需要的是正确判断的句子，也就是<span
+lang=EN-US>exists</span>那个响应的判断语句是对的，也就是说<span lang=EN-US>payload</span>为<span
+lang=EN-US>1</span>时，回显<span lang=EN-US>exists</span>，即数据库版本为<span lang=EN-US>1</span>。</p>
+<p>可利用此特性进行列名表名字段名的爆破。步骤仍然相同，不再重复。</p>
+<p><span style='font-size:14.0pt;font-family:黑体'>Xss_Reflected：</span></p>
+<p>随手尝试<span lang=EN-US>&lt;script&gt;alert(‘1’)&lt;/script&gt;</span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image068.jpg" class=""></span></p>
+<p>看回显可能过滤了<span lang=EN-US>script</span>头</p>
+<p>尝试下大小写<span
+lang=EN-US>&lt;Script&gt;alert(‘1’)&lt;/Script&gt;</span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image069.jpg" class=""></span>成功回显，只过滤了<span lang=EN-US>script</span>，没有用正则匹配。</p>
+<p><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>XSS_Stored:</span></p>
+<p>由上可知先<span
+lang=EN-US>&lt;Script&gt;alert(1)&lt;/Script&gt;</span></p>
+<p>发现不行，看来不是大小写问题</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image070.jpg" class=""></span></p>
+<p>再尝试<span
+lang=EN-US>&lt;Scr&lt;Script&gt;ipt&gt;alert(1)&lt;/Sc&lt;Script&gt;ript&gt;</span></p>
+<p>还是不行</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image071.jpg" class=""></span></p>
+<p>看看源代码</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image072.jpg" class=""></span></p>
+<p>发现对<span
+lang=EN-US>name</span>只做了简单的过滤处理，将<span lang=EN-US>&lt;script&gt;</span>置换为空。而<span
+lang=EN-US>message</span>进行了<span lang=EN-US>html </span>实体转义的操作，很难进行<span
+lang=EN-US>XSS</span></p>
+<p>但是<span
+lang=EN-US>Name</span>可以进行<span lang=EN-US>XSS</span></p>
+<p>但是发现输入有长度限制，我们将限制去掉</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image073.jpg" class=""></span></p>
+<p>再输入<span
+lang=EN-US>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/sc&lt;script&gt;ript&gt;</span></p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image074.jpg" class=""></span></p>
+<p>成功弹窗</p>
+<h3 id="High"><a href="#High" class="headerlink" title="High"></a><a name="_Toc26366750"><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>High</span></a></h3><p><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>Brute Force</span><span style='font-size:14.0pt;font-family:黑体'>：</span></p>
+<p>提交密码发现又有延时，感觉还加了别的什么，但是一看源码，随机延时<span lang=EN-US>0~3</span>秒<span lang=EN-US>……</span></p>
+<p><span
+lang=EN-US>2333</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image075.jpg" class=""></span></p>
+<p>我们依旧可以修改<span
+lang=EN-US>burp suit</span>里<span lang=EN-US>intruder</span>的<span lang=EN-US>option</span>设置进行调整，使其等待最大延时时间即可。</p>
+<p><span style='font-size:14.0pt;font-family:黑体'>SQLI:</span></p>
+<p>这题还给了单独的输入界面</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image076.jpg" class=""></span></p>
+<p>测试了一下感觉你输入什么当前页面就会回显什么，并且在主页面输出回显结果</p>
+<p>但是只有一行</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image077.jpg" class=""></span></p>
+<p>看一下源代码</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image078.jpg" class=""></span></p>
+<p>发现没有加什么东西，只加了一个<span
+lang=EN-US>limit</span>来限制输出而已。</p>
+<p>我们可以用<span
+lang=EN-US>#</span>或者<span lang=EN-US>–+</span>注释掉，再用‘闭合掉单引号这里可以用联合注入配合<span
+lang=EN-US>group_concat</span>多行回显。</p>
+<p><span
+lang=EN-US>1’or 1=1 group_concat(database()),1 from users #</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image079.jpg" class=""></span></p>
+<p>接下来的步骤与前面难度的大致一样，不再重复。</p>
+<p><span style='font-size:14.0pt;font-family:黑体'>SQLBI:</span></p>
+<p>怎么回事，怎么又是似曾相识的样子</p>
+<p>按照<span
+lang=EN-US>High</span>里的<span lang=EN-US>SQLI</span>的过滤来尝试</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image080.jpg" class=""></span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image081.jpg" class=""></span></p>
+<p>果然又是用<span
+lang=EN-US>#</span>将后面的语句注释掉，再用单引号闭合<span lang=EN-US>limit</span>再配合<span
+lang=EN-US>group_concat</span>即可。</p>
+<p>发现注入点，我们可以利用。本来以为它是将<span
+lang=EN-US>data</span>加密后存进<span lang=EN-US>cookie</span>中再进行提交的，这样抓包就无法修改，我们进行盲注的时候还需要猜测<span
+lang=EN-US>cookie</span>的结构，很麻烦。但是<span lang=EN-US>…</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image082.jpg" class=""></span></p>
+<p>哦豁，他没有这么做，那我们继续用<span
+lang=EN-US>intruder</span>来尝试盲注。</p>
+<p>锁定爆破点</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image083.jpg" class=""></span></p>
+<p>设置<span
+lang=EN-US>payload</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image084.jpg" class=""></span></p>
+<p><span
+lang=EN-US>Start attack</span></p>
+<p>发现长度都一致，很奇怪，仔细看发现因为</p>
+<p><span
+lang=EN-US>HTTP</span>头指向的是</p>
+<p><span
+lang=EN-US><img src="/2020/02/18/wsks/image085.jpg" class=""></span></p>
+<p>这样不管怎么回显都是</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image086.jpg" class=""></span></p>
+<p>我们修改下请求头使其指向回显的页面</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image087.jpg" class=""></span></p>
+<p>再试试，发现成功了</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image088.jpg" class=""></span></p>
+<p>同样的方法可以爆库爆列名。感觉手动测试的时候有延迟，可能还存在一些东西，看看源代码。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image089.jpg" class=""></span></p>
+<p>发现了<span
+lang=EN-US>sleep</span>，那就意味着基于时间的盲注会不准确，因此我一开始尝试布尔注入避开了弯路。</p>
+<p><span lang=EN-US style='font-size:14.0pt;font-family:黑体'>XSS_Reflected</span><span
+style='font-size:14.0pt;font-family:黑体'>：</span></p>
+<p>随手尝试<span
+lang=EN-US>&lt;Script&gt;alert(1)&lt;/Script&gt;</span></p>
+<table cellpadding=0 cellspacing=0 align=left>
+ <tr>
+  <td width=47 height=0></td>
+ </tr>
+ <tr>
+  <td></td>
+  <td><img src="/2020/02/18/wsks/image090.jpg" class=""></td>
+ </tr>
+</table>
+
+<p>回显有点奇怪，猜测应该是正则掉了<span
+lang=EN-US>script</span>，试试别的标签<span lang=EN-US>iframe</span>、<span lang=EN-US>img</span>之类的</p>
+<p>例如<span
+lang=EN-US>&lt;img src=1 onerror=alert(1)&gt;</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image091.jpg" class=""></span></p>
+<p>成功，查看下源代码，发现循环正则匹配<span
+lang=EN-US>script</span>以及<span lang=EN-US>/i</span>，<span lang=EN-US>/i</span>参数的意思是无视大小写，这样使得<span
+lang=EN-US>script</span>头很难通过正则，但是我们可以用别的标签头。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image092.jpg" class=""></span></p>
+<p><span style='font-size:14.0pt;font-family:黑体'>XSS_Stored:</span></p>
+<p>随手在<span
+lang=EN-US>name</span>和<span lang=EN-US>messagebox</span>都尝试<span lang=EN-US>&lt;Scr&lt;script&gt;ipt&gt;alert(1)&lt;/Sc&lt;script&gt;ript&gt;</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image093.jpg" class=""></span></p>
+<p>这回显似曾相识，<span
+lang=EN-US>name</span>试试别的标签头</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image094.jpg" class=""></span></p>
+<p><span
+lang=EN-US>……</span>，和上一题很像嘛。</p>
+<p>看看源代码</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image095.jpg" class=""></span></p>
+<p>果不其然。</p>
+<h1 id="简单RE"><a href="#简单RE" class="headerlink" title="简单RE"></a><a name="_Toc26366751"><span style='font-size:18.0pt;font-family:黑体'>简单RE</span></a></h1><p>此次实验分别采用了<span lang=EN-US>WINDOWS10</span>和<span lang=EN-US>XP</span>系统。因为我一直以来写的都是<span lang=EN-US>web</span>不怎么会逆向，作业的完成寻求了队友的帮助，非常感谢。做个记录。</p>
+<h2 id="Crackeme"><a href="#Crackeme" class="headerlink" title="Crackeme"></a><a name="_Toc26366752"><span style='font-size:15.0pt;font-family:黑体'>Crackeme</span></a></h2><p><span lang=EN-US>&nbsp;&nbsp;&nbsp; </span>首先将文件拖入<span
+lang=EN-US>IDA</span></p>
+<p><span lang=EN-US>&nbsp;&nbsp;&nbsp; </span>找到跳转点</p>
+<p><span lang=EN-US>&nbsp;&nbsp;&nbsp; <img src="/2020/02/18/wsks/image096.jpg" class=""></span></p>
+<p>跟进</p>
+<p><span lang=EN-US>&nbsp;&nbsp;&nbsp; <img src="/2020/02/18/wsks/image097.jpg" class=""></span></p>
+<p>发现这里的函数有个逻辑，条件不满足就跳转（<span
+lang=EN-US>JZ</span>），即密码不正确就跳转</p>
+<p><span lang=EN-US>&nbsp;</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image098.jpg" class=""></span></p>
+<p>我们将<span lang=EN-US>jz</span>改为<span lang=EN-US>jnz</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image099.jpg" class=""></span></p>
+<p>这时候逻辑会反过来，输入错误密码就不会跳转，输入正确的密码就会跳转。我们运行运行一下<span
+lang=EN-US>exe</span>。</p>
+<p>输入错误密码</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image100.jpg" class=""></span></p>
+<p>输入正确密码</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image101.jpg" class=""></span></p>
+<p>完成。</p>
+<h2 id="Overflow1"><a href="#Overflow1" class="headerlink" title="Overflow1"></a><a name="_Toc26366753"><span style='font-size:15.0pt;font-family:黑体'>Overflow1</span></a></h2><p>先拖进<span
+lang=EN-US>IDA</span>，设置断点，随便输入几个数，密码错误。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image101.jpg" class=""></span></p>
+<p>找到断口，发现一个函数<span lang=EN-US><img src="/2020/02/18/wsks/image102.jpg" class=""></span></p>
+<p>跟进一下，大致逻辑为将<span
+lang=EN-US>a1</span>与<span lang=EN-US>1234567</span>进行比较，返回一个值给<span
+lang=EN-US>v3</span>，之后将<span lang=EN-US>a1</span>复制给<span lang=EN-US>v2</span>，然后将逻辑值返回给<span
+lang=EN-US>v3</span>。</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image103.jpg" class=""></span></p>
+<p>我们发现<span
+lang=EN-US>v2</span>与<span lang=EN-US>v3</span>差了<span lang=EN-US>8</span>个字，那么此处可以拿来作为溢出点利用，有如下操作：</p>
+<p>覆盖前</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image104.jpg" class=""></span></p>
+<p>输入大于<span
+lang=EN-US>1234567</span>的<span lang=EN-US>8</span>位字符或数字都可以</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image105.jpg" class=""></span></p>
+<p>覆盖成功</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image106.jpg" class=""></span></p>
+<p>可以看到<span
+lang=EN-US>exe</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image107.jpg" class=""></span></p>
+<p>成功</p>
+<h2 id="Overflow2"><a href="#Overflow2" class="headerlink" title="Overflow2"></a><a name="_Toc26366754"><span style='font-size:15.0pt;font-family:黑体'>Overflow2</span></a></h2><p>与上面一样操作，先设置断点，找断口<span lang=EN-US><img src="/2020/02/18/wsks/image108.jpg" class=""></span></p>
+<p>发现一个函数</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image109.jpg" class=""></span></p>
+<p>变成了文件输入，需要一个叫<span
+lang=EN-US>password</span>的文件</p>
+<p>写个文件</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image110.jpg" class=""></span></p>
+<p>运行</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image111.jpg" class=""></span></p>
+<p>找到我们刚才输入的东西</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image112.jpg" class=""></span></p>
+<p>回过来看上面的函数，好像这里可以用来溢出</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image113.jpg" class=""></span></p>
+<p>我们可以写一个文件用<span
+lang=EN-US>8</span>个字符将其填充覆盖，之后再使用<span lang=EN-US>4</span>个字符来覆盖<span
+lang=EN-US>main</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image114.jpg" class=""></span></p>
+<p>运行结果</p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image115.jpg" class=""></span></p>
+<p>完成。</p>
+<h2 id="Overflow3"><a href="#Overflow3" class="headerlink" title="Overflow3"></a><a name="_Toc26366755"><span lang=EN-US style='font-size:15.0pt;font-family:黑体'>Overflow3</span></a></h2><p>拖进<span
+lang=EN-US>IDA</span>发现<span lang=EN-US>buffer</span>由<span lang=EN-US>8</span>字节变成<span
+lang=EN-US>44</span>字节<span lang=EN-US>,</span>所以我们可以用<span lang=EN-US>44</span>个字节来覆盖<span
+lang=EN-US>authenticated </span>低字节中的<span lang=EN-US> 1</span>在调试的过程中得到<span
+lang=EN-US>buffer</span>的起始地址为<span lang=EN-US>OX0019FB2C.</span></p>
+<p><span lang=EN-US style='color:black'><img src="/2020/02/18/wsks/image116.jpg" class=""></span></p>
+<p>让程序弹出一个消息框只需要调用<br><span lang=EN-US>Windows </span>的 <span lang=EN-US>API </span>函数 <span
+lang=EN-US>MessageBox</span>，而调用<span lang=EN-US>API</span>函数就需要将之翻译成机器代码，用十六进制填入<span
+lang=EN-US>password.txt</span>中。用<span lang=EN-US>Dependency Walker</span>工具来获取函数<span
+lang=EN-US>MessageBoxA</span>的入口地址。可以通过动态链接库<span lang=EN-US>user32.dll</span>在系统中加载的基址和<span
+lang=EN-US>MessageBoxA</span>在库中的偏移相加得到。于是可得<span lang=EN-US>user32.dll </span>的基地址为<br><span lang=EN-US>0x69E00000</span>，<span lang=EN-US>MessageBoxA </span>的偏移地址为<span
+lang=EN-US> 0x00080CD0</span>。基地址加上偏移地址就得到了 <span lang=EN-US>MessageBoxA </span>在内存中<br>的入口地址<span lang=EN-US> 0x69E80CD0</span>。第<span lang=EN-US> 53</span>～<span
+lang=EN-US>56 </span>字节填入<span lang=EN-US> buffer </span>的起址<span lang=EN-US><br>0x0019FAA0</span>，其余的字节用<span lang=EN-US> 0x90</span>填充<span lang=EN-US>.</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image117.jpg" class=""></span></p>
+<p>运行<span
+lang=EN-US>exe</span></p>
+<p><span lang=EN-US><img src="/2020/02/18/wsks/image118.jpg" class=""></span></p>
+<p>成功。</p>
+<p>作业到此结束。</p>
+</div>
+
+<script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script><script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+
+</html>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/StudyM/" rel="tag"># StudyM</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/16/nmap/" rel="prev" title="Nmap部分参数">
+      <i class="fa fa-chevron-left"></i> Nmap部分参数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/19/buuctf/" rel="next" title="Buuctf刷题">
+      Buuctf刷题 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQLI："><span class="nav-number">1.</span> <span class="nav-text">SQLI：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整型注入"><span class="nav-number">1.1.</span> <span class="nav-text">整型注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符注入"><span class="nav-number">1.2.</span> <span class="nav-text">字符注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔盲注"><span class="nav-number">1.3.</span> <span class="nav-text">布尔盲注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延时注入"><span class="nav-number">1.4.</span> <span class="nav-text">延时注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#报错型注入"><span class="nav-number">1.5.</span> <span class="nav-text">报错型注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#综合注入攻击"><span class="nav-number">1.6.</span> <span class="nav-text">综合注入攻击</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Xss："><span class="nav-number">2.</span> <span class="nav-text">Xss：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xss-Reflected"><span class="nav-number">2.1.</span> <span class="nav-text">Xss_Reflected</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xss-Stored"><span class="nav-number">2.2.</span> <span class="nav-text">Xss_Stored:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xss-DOM"><span class="nav-number">2.3.</span> <span class="nav-text">Xss_DOM:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞修复："><span class="nav-number">2.4.</span> <span class="nav-text">漏洞修复：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DVWA漏洞攻击实现："><span class="nav-number">3.</span> <span class="nav-text">DVWA漏洞攻击实现：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LOW"><span class="nav-number">3.1.</span> <span class="nav-text">LOW:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Medium："><span class="nav-number">3.2.</span> <span class="nav-text">Medium：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#High"><span class="nav-number">3.3.</span> <span class="nav-text">High</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单RE"><span class="nav-number"></span> <span class="nav-text">简单RE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Crackeme"><span class="nav-number">1.</span> <span class="nav-text">Crackeme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overflow1"><span class="nav-number">2.</span> <span class="nav-text">Overflow1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overflow2"><span class="nav-number">3.</span> <span class="nav-text">Overflow2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overflow3"><span class="nav-number">4.</span> <span class="nav-text">Overflow3</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">K_Kotori</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">K_Kotori</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
+</html>
