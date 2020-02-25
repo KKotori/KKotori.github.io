@@ -26,7 +26,7 @@
     exturl: false,
     sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
@@ -46,27 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="老师说Nessus扫漏特别强，是企业级的那种，我下个小版本来简单摸索摸索。">
+  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nessus简单使用">
 <meta property="og:url" content="https://kkotori.github.io/2020/02/16/nes/index.html">
 <meta property="og:site_name" content="WS">
-<meta property="og:description" content="老师说Nessus扫漏特别强，是企业级的那种，我下个小版本来简单摸索摸索。">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image001.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image002.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image003.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image004.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image005.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image006.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image007.jpg">
-<meta property="og:image" content="https://kkotori.github.io/2020/02/16/nes/image008.jpg">
 <meta property="article:published_time" content="2020-02-16T05:40:36.000Z">
-<meta property="article:modified_time" content="2020-02-21T11:24:45.337Z">
+<meta property="article:modified_time" content="2020-02-25T14:06:47.854Z">
 <meta property="article:author" content="K_Kotori">
 <meta property="article:tag" content="StudyM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kkotori.github.io/2020/02/16/nes/image001.jpg">
 
 <link rel="canonical" href="https://kkotori.github.io/2020/02/16/nes/">
 
@@ -219,7 +210,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-21 19:24:45" itemprop="dateModified" datetime="2020-02-21T19:24:45+08:00">2020-02-21</time>
+                <time title="修改时间：2020-02-25 22:06:47" itemprop="dateModified" datetime="2020-02-25T22:06:47+08:00">2020-02-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,6 +225,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -244,91 +242,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <html>
-
-<head>
-<meta http-equiv=Content-Type content="text/html; charset=gb2312">
-<meta name=Generator content="Microsoft Word 15 (filtered)">
-<style>
-<!--
- /* Font Definitions */
- @font-face
-        {font-family:"Cambria Math";
-        panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-        {font-family:等线;
-        panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-        {font-family:"\@等线";
-        panose-1:2 1 6 0 3 1 1 1 1 1;}
- /* Style Definitions */
- p.MsoNormal, li.MsoNormal, div.MsoNormal
-        {margin:0cm;
-        margin-bottom:.0001pt;
-        text-align:justify;
-        text-justify:inter-ideograph;
-        font-size:10.5pt;
-        font-family:等线;}
-a:link, span.MsoHyperlink
-        {color:#0563C1;
-        text-decoration:underline;}
-.MsoChpDefault
-        {font-family:等线;}
- /* Page Definitions */
- @page WordSection1
-        {size:595.3pt 841.9pt;
-        margin:72.0pt 90.0pt 72.0pt 90.0pt;
-        layout-grid:15.6pt;}
-div.WordSection1
-        {page:WordSection1;}
--->
-</style>
-
-</head>
-
-<p>老师说<span lang=EN-US>Nessus</span>扫漏特别强，是企业级的那种，我下个小版本来简单摸索摸索。</p>
-<a id="more"></a>
-<body lang=ZH-CN link="#0563C1" vlink="#954F72" style='text-justify-trim:punctuation'>
-
-<div class=WordSection1 style='layout-grid:15.6pt'>
-
-<p>此次初次使用<span lang=EN-US>Nessus</span>对学校<span lang=EN-US><a href="http://www.cumt.edu.cn" target="_blank" rel="noopener">www.cumt.edu.cn</a></span>进行了扫描。发现了部分信息。</p>
-<p><span lang=EN-US>1</span>、经过扫描发现学校的远程操作系统<span lang=EN-US><img src="/2020/02/16/nes/image001.jpg" class=""></span>为<span lang=EN-US>MAC OS 10.4</span></p>
-<p>之后还发现了类<span lang=EN-US>unix</span>系统<span lang=EN-US>FreeBSD</span>。</p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image002.jpg" class=""></span></p>
-<p>发现了服务器类型为<span lang=EN-US>Apache</span></p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image003.jpg" class=""></span></p>
-<p>找到了<span lang=EN-US>CPE</span></p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image004.jpg" class=""></span>报告有<span lang=EN-US>ssh</span>运行于部分端口上</p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image005.jpg" class=""></span>还发现了其版本和支持的认证方式。</p>
-<p>最后还发现其返回了页面<span lang=EN-US>html</span>源码和<span lang=EN-US>HTTP</span>报文。</p>
-<p>本来想<span lang=EN-US>telnet</span>一下试试看，结果发现没响应，然后再仔细查看报告，发现</p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image006.jpg" class=""></span>确定此方法行不通。本地认证检查插件未运行<span lang=EN-US>……</span>继续看报告。</p>
-<p>发现了服务器支持时间戳，然而并没有什么用。</p>
-<p>再往下看，发现了追踪路由路径。</p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image007.jpg" class=""></span></p>
-<p>这应该是发送请求后经由适配器再中转到目标<span lang=EN-US>ip</span>。</p>
-<p>可能我的扫描方式不对，并未发现什么有意思的东西。于是调整参数，增加扫描的范围，并加上了搜索<span
-lang=EN-US>web app</span>的选项。结果发现了一个在<span lang=EN-US>nessus</span>中报道为高危的<span
-lang=EN-US>SSL</span>问题。</p>
-<p><span lang=EN-US><img src="/2020/02/16/nes/image008.jpg" class=""></span>根据描述，大致为<span lang=EN-US>SSL2.0/3.0</span>版本加密方法有缺陷。<span
-lang=EN-US>NIST</span>已经确定<span lang=EN-US>ssl 3.0</span>不再适用于安全通信。自<span
-lang=EN-US>PCI DSS v3.1</span>中的实施日期起，任何版本的<span lang=EN-US>SSL</span>都将不符合<span
-lang=EN-US>PCI SSC</span>对<span lang=EN-US>“</span>强加密<span lang=EN-US>”</span>的定义。远程主机支持使用提供中等强度加密的<span
-lang=EN-US>ssl</span>密码。<span lang=EN-US>Nessus</span>将中等强度视为使用密钥长度至少为<span
-lang=EN-US>64</span>位且小于<span lang=EN-US>112</span>位的任何加密，或者使用<span lang=EN-US>3DES</span>加密套件的任何加密。如果攻击者位于同一物理网络上，则很容易绕过中等强度加密。为了更安全起见，且为了防止有人通过内网攻击，尽管<span
-lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持版本，但许多<span lang=EN-US>web</span>浏览器以一种不安全的方式实现此功能，使得攻击者能够降级连接因此，建议完全禁用这些协议。</p>
+        <div id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <div class="hbe-input-container">
+  <input type="password" id="hbePass" placeholder="" />
+    <label for="hbePass">Hey, password is required here.</label>
+    <div class="bottom-line"></div>
+  </div>
+  <script id="hbeData" type="hbeData" data-hmacdigest="89476dd7a7370569dca65de566284ee4c6c675b95d4b59b7ae1c7076e9bdb5cd">80de7dd93b7e2b3889ae81b3b53f9a740019e36efb7d6974fc06ced4e27ebd68af47d47905db3fd4d3d0c7adddd464a243aa5fbb7025be33aa310c2ac7d1c6a6776616ffab527a9e6669a2f5840131a28be1fa03f35712d7da1398f9f98f9e9a462aad4a01538e4f2afe44510779f87aee7fc9f492a21d8e65f9a1bf7f55b89affa530c8d31ab85eda06bc9dc17b4a1469c647f87c2c94c136b9eb81571b81d95321f726720c84e11f5355d81b93ff2659eec53080b892e7920216803c351afbdb81bb7a84495eecd3dc42e7d7310dc2d24799407f1ab172c0a10a17045e51a1f622a09644797a1e2b1a3ef3fd8cbb60b18b4fdb3799e7e1b22b9668c4ddf9eb87832019c7609409a82036fa97da491e54e6392758d3b041b20719e94740742dbbd3bbed4da4a2ce6173edb08e52dc341bb5b866930bba69597010458ccef6a637d27649d8b246fc246473812db57a5d2da58274d7d60af22dd8adfa77079bb16ca4020719f6a20382e855d13d26fda646220d2a8e1d035842d5a97a39e2c49c1a59fb8d25e637f8bd9d264653dcde8b9e08d5598feba00d6e8dcd0b1dafe85bd118d09c85ad6fdb6d0b47ec95de4cf240482d0b66369d4abd5d649e0f52e250f8326ac1fb1c0bdb05f8718c4986054b5dcaf847779e83c4fd7659e2984acf72f14a0b9e250b7ad0906a94c69efb529e8385d739ca9941eba7e2d641a9786f8a64d8583487abe1fde9ad32dc2273de7cedbe1fe77650b4d7a390aea59326ec8aaa018032970b0205a623267035d7ad2e35cdd2e7c07f6a46f5e63924d647c56938ca2cd843cac2a702a4d530fdf5357903eb48d625c659d6182b47dba4e6135a2088aede9205e47916ae92743289a17176f3ba52ef7c6e38980dfbe1e3c0c6a464a89674c1fb08ce0a798034ef59946070b4e3802a37b4f6fdf56033cc91e303862eda64659b61bf7ff62370f13ef5d1f6fcdcb2715f38e860267da1499c1ed554dba05cf448e9ca6e90af7f284daf6ddfed1fa57a0fded9af38e2248adacf513abd3f2ce5efdddf5c85119d452a3d3e4f1a346fca9248c920165a5ef98b38dd60d12d09c5820fadfaaa72abbdfb1167c6baab2cbfcbe02a87eda8634c5a191e3c2c9ce96271a7e223212854800eb329996d0e0d25b10dc58dd1553821e1c982fb75fc2ef88a7552deb8f38a68c1b69c96120c30f3bdb7303ee9aa20254da0ff1610cce18234059975d4bf71e460ab6415e0cf5e6aaf3e1cec0c62b5dd9d27cc95c2de86d86f7680e43e70b7cecac0a6eff1546af57e21f4266636348646bdf78059b872655869e71389df90fbcd31e9f0f14f3d83fa8a1e7be19e96d7380e86b6c5ea1986cb4b57710221ded04de74066bbe8a298ebc839b67a0ac09bc8d63b04c38f5ada41b4bdac65284017e0f8998aab9ecd986cf617dfa23bdc3f54d26243ac9f7a086387af96b21ed6c5e015bb137ee33f0e22459e7b2a4051db5466936a7a78b3bf831bd14c6bac71116230594d225e0ba0b27b1b61c4c9afd298866c6ae94fb01602cbe33fc932b07f98a71f9f0b6ee8db8a216d288cc0cb911cad7c98a848c415cbf6c445a078388aefac6b2cb74edbf6a45728fe38baf99ef00af3699eb3ede41523186b9ac3c47ce2c356a356658d0e03252d78bdd857d71a62e6cf5e544d16f942f8fc822a2eadc1a85c0012f32967ceecf5e704684095b8151d1c2768642129ed25cc29fd167c59448580535b75ad1211208326cbb9ad5eae62e2f6e2569765bb6e1561de0ea5dd184fe95816b3d7b3330833e0f477a9b368844de594df14c3a467ab21491168824c6bfb15ae7b6b4c094c7a72ef1f7da1bc51f5aac1d530c422370e944868256e66c20e4c0840ce5040188f1eae805cc1b057959e5c470dd6e3f0b16463a21021e3936cc5515b48ec39bb0d82c7ef466318c5fe23ec3d021efd478394964fd73b6a9733510bec8e23d2530ea27c8767c79a54b4a5a2db6ea6c40e2a1d90d62ba249927ef8acc8b3db42a382d73ede3a8629cd5fe385c6751a5f0686bca8526f24b3404e78fee3c0ad3d13ec6a932c63e268f55e128e898aeb1e3ee77f9563f20bbac2fec20b76d44ec472c1b6f967c9fe93445e6020051de14da265f45580dad0fb947b24c4e92879a772db660106b2477b9864f0203297ff35b60eb2fa1bfb12076b84f49d9461283c27d924994b6d7178681fa05bc86d774841ef4ddd897e9a77450fd99873af5563edcf6ac0d6ac2dccdec65268c77fdbf39dab06211ce8bf5f0dd93b5fa31781a10303995f8a6a564ab4f9a610f1c83a5623d3f99da9551cee239e0b4875bb01567f6a0fa50a0174cf631d612f4ca16c30af8c2f5b085e7e62bc37aa939a7b3f18a2964a8235da29b1240246ef11fab0e847fdfdf0f6e8eb794d7abfd6bebb5d451b495069f026ac557041f560313f8a8202a06aac4bd392e933ad39b5d046bd0a6332b83b54766ff22981f1ecc3938061b6195801a321cc73db5e1cdab022e7afe965dc1270cfd2c140beb7e40be79cc2d63e17d9a5531144e758a86f8d3652bf7de06d3e00388f349e32dd4685b542f7aa4695ea4bd5199c0e32d1e4bbbf1ac39bd9a75d3df34efccd343fba38e0debe69f56be34dc2a06f29c1e5d10db859645075bfa9f0eaf0c071b874487b206fe0179a093d3e33198772b909a1081d79682c9e85e32a830ee6364f8799ed3a37bf56cf63df3fb6cba130830dbcceea8ed2c6ca0bbba6492cf4820825a6f91adf106ec81550a3a801f1a813f47c151398e97a371953080ec7f109ab1df51b9ad6851a073f9016c5a25299c782b99da6f8337cd96d191602ae4df1899bd26382f2cfc523bcffe7ef311c27bc9e289ccb9c3e03efd493459c9a4d64af641f530e884804f900f26464e7a159fa3a2f8ac23c6f25c385ab1a1802ce5f66b89e8465ddebfedbb5ad7b70132da6d819b9fbca2f49b736c99fe24db74fb408cde7511edf00269f150296e9b3f326cabf64679225850d5e9d55895f649fd6e37d7154519b7517e755da1a6f78ae2cacf81c34d06b14246577b9fd260ed769465eb2459cc2c79abc8dcd1599c03d19089875cd6a46f2405513ae700b67dd76c70adee488673ef46f6d4a2d745a9b5693bd2e2b0ae81ab29e011319eb929d4644e2ac4245db238df5a6b950648b2330dc326697168838a2a49f8199ac53b0b49fe6e2692e87ea58677d3809ebbd8126c9de5241c28b827c622f295aa685e4a2c7b079677164c9cdc0946c73fc39095fa2d4b75742476862eeddeda78f0b9eb39ae28de37e3aa267de69509d8d875a65553f01033fd5f58b2e46f328b462482cf9d301e466583bf680f9bf2434dd0df81c0411b8d52c22dbf3d1739c74b68be0ae22dd136ce5d0457f0dd7b5e0ff06af2c4536d193f1c00a7b820c45319af1a9beec29a655445f5c4f37bce7540a256cc141000796bd2aa1415b9db2a27456afb38ea720e3b5b76e545a041c92b36900430b55fc04424ddff703cf336bff236b00d0598032f89bc4d195478fa6359e7617ecf360e23c4a81fd242f1c9a1a5052ce0ea9fd4910743aad6dc7571b204801a549a100984597e6c07b17ec90a65185cccef829951f2c8efb8418057524c255dbd12eb5957b2b1967dd641e97f00540c2e90b2a0426e41dbd23f5dd4a060578f8872a477c229ad008f2a4c4d0849cb6c3835f2ce019e543295c52ddb6a0608c6eae577af6c35bb242a51bce6052d769b735bfe5c324834232e980643000d198aafffbcdabf49109d4203add7bddc87aab7076e96cfae6916e6a46b4b4058f3f5cf87aa7287466ba8254277114b256d2e9f00d10970cc1141c3d81b8a5092bb644899c812a725b6d93214d1083faefd789aab2e0e0062f344a72f7f4d3aff0e81fa4c2ab2811cb65eae9f9a602b61f71f5e6c9727128bb348b350334a7530e267487837c3e9003f0b481f32ea81a5995ac4f67ce440bb606f38a14841aeef6dd4e8bee1f7c4f2999ff7043c955224c238df2562f31d6e3587aec73983d69e6d4ca068a7ea526b4a12b6d3a838faa5b2b40ead5b6f7a4a9a483705535079dd9d23e64f3dde38d3f7f6cd710425b29ad01bafc657ac0266bc2295902c902717485ac4f614e814e8c12e021a165ca53d4ef90563525826cb4786d1577432221327f5dff3b68af50b02eeaf892858b4ca2c924308232d138b08e3d96ec2eb631ba61f03ad073f626a2be6ec6f231dca11f679be1e00b284939903c91284a8b48357a4a6b7ae46cbf522eff761fe74c5d52abbb20792812137584c3d2813b060ba38e88240bd595be094f71129e1f58a7c2ab1c3cae31c3beef20b69fe7999bcd47d44882ccc2e59add5416da76499abc9c66bb081ef7204e0858951544377dbdfe480943067c422a56e71095c0e750bddb8959474d1d8e7a0104f6bed2a3d2f0aa2158f2aab128d96bf18e72972b8734a696e6215de3b36c0545e70c9725bf0411251fc24e2f261e4f0baa3ada9a0a485be42b6beb5d4a8d3d94a064fc3ffbbe317cbf157dadd0a46492ca184a3572646a07620c2400b0f6912e0e750474f20e5431581103230160f3da8e04d440024b9612752119f31def0e7873615cb7b673abe6baa7bda39aac48bd36dafdd302e989ff6890d24b87d62c3a431d30097ba605a1f7853233e51988622e098b6b9a1c46bb89cf1cdaafdde6e11f0ff098c11bc9a5cd30ea28cfa2d730962eac61ee9392a2439fbb222d381bd3736512e2d645f39c1b28f46b1b34284529287ae5db90ef6bbbae83cb8f9fedc5378fa1b7c51b8d4af92d0b26d78a0fb85adc1ed25e8cac5470c2becbb30bfcdbecf2de0c9a268a8513ed003bc557e6d0a02ce43eb33cccf1b578f97def9794771118c4bbbc38aa93cdb8aa2e67781e5a05dfcf99ab81688926eb5bb02275edacb112fb4d4889e7739d66ac71611c871ea56b1662f3dd34f275cd0bead95907dff6ff9d16f1ffe2ea01362362cee7104322ee9c56fec23a8eb3e09c0b102260c91ba3f1ce983fc954c9885d3735d4892298cd964c05b2ad0bc4d836132b73c9640589ee5fc3f6f2a082f7bef4ec625ce8f8ada5bbe77e6814b09209627fe2f190f1ba9e168d8cbd3440203b0b2d3eb68840af471bb643c73adc0511d9e60620f92f47e534c2957eb6da4649b5100ccfef5508bb493cf18c82d6e5ffe4b6ff362b6045e348bb3fdb4703ca45087c6acbafc014d978166f6173bc3040cfec84e143aae22fa49084c8d3b88a2c0002455f73a6fd49d09b4e56968567e33d82252bd192417f363fec80d57577879e3d3ac1ea7769476090e13e4500e57fd8e3d5113d18bbaa8b509f4113b37a2d98bf091558dd0d8af4b0040fc8622895f2d13cbab3ad7579514e3c4f566ba442aaf6abf925a638710fd7241c8ec9592e8c515ac91cdf9758e85dee8d979cf9757fb534aa0d373d0030c9f64933123a74417224394483d75b78cf7c37c853363f3dc51f5ad5e07fcc8a66c4c773c9cfb88c63756410af337b91872cc0afa8690f6fd7ee0c6f35db66ee3da6a4d20894c3f3125718ebcc53017394190225fc7e3ca7c8df68db9a0eb42453f3c0e26c9fa397c6f386226bbb384ea81f7c45c9d74adec86060b9223f02b1df7bbd5c50d7830e5a4755d5fd351d7cd517b2e33e2fc5e77ad645c82413c93ddefb9bf3653c339b78476870bc766b96a994ea6df954bc8801ae57199519c4c65b702134000b44ec760238c1f965b0733824a7082c2e244cacf748d0ebb9796608c562e0f68536e32ba51a75846ee12bb8be41f1519c2a541018e79ecb7e210dae41e25573ba7cde0cb5643ca32bcbcd3cfe66aa663efc46216ccbeef0e2a1e74ce8895916b727c7d6a2cf564c1cbcc6f3770686fb30441377273e9e83864225898ee50b06fd5176a77cf0c89e7f01fce31c2ed7be20a10628d43f2032b9f4984c562ce7213e5e853b3dff0dc027422ce7c208a6166af72565ca1a421dfbd61db11219ea862100153f261bb4e00d8a9c24c01edb713a5617864da95828d8be317ebe37960a6384d909ab9994a066fd946dd9e6f8585b4c16339e3493828a0d538604f4b534c961e481f9e8973808efadc3b7fdf0b2af231662262a011677db56eb13703a9a571499ccec335872a50512f5aa98b90fb1b489d59271b614d88fe2e5d5975dbc92760f6811bb5417079d522f02f15d5f37df0e127f9b3c0bd73ef5f29d00afc9937636c44ad6ece52fa2f0764cc8aa19239d0f8deb9c3d9d940ab9c6e73017a2ae11b63cc81d5cf80ffa70dd656429e3be57bb7bd4e6655b378b20b52a25d855741ed6749715175fa5be37ac155b2c1d366b843c3c1b7826482347aab780cb492fc01f019266a6532c71eb1e968703d51a67d54da7a1290cc785046c7ac53aa2a3d0d5ea7ce78fe380a3ec1772250d417990632b9420a24ebfaf91ce3bc356405bc40377c9f8206adab6cf9d9db1f8510c37ba44ad11d4535535a2f87d7a6d5d51e26fa428120f5595c61cc5e2c83227ec98d24271a5e7f0cc64b25aa2b69916744ae0066fa86d481d685707684162d17ae25c54038a55d0af0d3469c4102827a521276a9b976f57cca83c7872e826f38b679baee15f2ac302b072d9328161ad57edcb2f728159fd6943f4e0271187f8a0c7a0b83bc17602d0f2d8bcc0858cfc40ce5966d9b849d8dab14e6139218c0522a74177443f56ba640a9e1bd478f10d70170027a4ee3e23c198b1776906e1da4eba1b27fc66ee6f40a4f8185d04953daea231ca9db554388690362d8fc6aacef4b9f2c42aeafaeeeab49b07bfcb9847360d286c7c811a4652457c63c6e83b7f6fefc32123b27f5211f379840e7d866779ab4c0a83cd0ef2b3d8c1a5cc0925e44e0b793dbc19b44412cf5c83fc90a5cce4a3a518ee8ed9ce71594f7ce2b5831fa54c41f070132d18de31a97592ae3d4548435df06352953fe4ef6c6e17d71b5000b081344271f8d91594b8d8169a8c596159f6fda80841690ba6ae7995fa3a272d8ab71f4b7c665260293baca6d4467a71722945bcc9899f55f2fc0380e47a698984d048dfa0be5906202d849742c7a7c5924edc018230692e12f5dba03174e6762951a2e36359d6923752e9cf84746eb2750d8b11d1e962c4dd11d232a67cf6d1b050a411ae7c5d38d3dbddf2d913cd48a9513741529f8449c3708d70a51547aeea340e029f9c0840f4cd8b1052e5bff7a063d6e7bb8e98093ccd2a83a3a2e55b43c8a69491a5d8ad40621acab36be3ef43257f882effe5bfefad3b5f6b9db27b5d88df20c714234e081d795163198b3c8ca9fdb91ea94a54a6a9d1bbe8224cf7a8fd494f333b5b432ba12df8fa37</script>
 </div>
-
-<script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script><script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
-
-</html>
-
+<script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
     </div>
 
     
     
     
+      
+      <div>
+      
+         ﻿<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------　　　　本文结束　<i class="fa fa-heart"></i>　感谢您的阅读　　　　-------------</div>
+    
+</div>
+      
+      </div>
 
       <footer class="post-footer">
           <div class="post-tags">
@@ -412,6 +349,10 @@ lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持�
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <a href="/">
+    <img class="site-author-image" itemprop="image" alt="K_Kotori"
+      src="/images/avatar.gif">
+    </a>
   <p class="site-author-name" itemprop="name">K_Kotori</p>
   <div class="site-description" itemprop="description"></div>
 </div>
@@ -438,9 +379,42 @@ lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持�
       </div>
   </nav>
 </div>
+  <div class="sidebar-button motion-element">
+    <a onclick="Chatra('openChat', true)"><i class="fa fa-comment"></i>
+    Chat
+  </a>
+  </div>
 
 
 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=110 src="//music.163.com/outchain/player?type=0&id=913908853&auto=1&height=90"></iframe>
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+window.setTimeout("show_date_time()", 1000);
+BirthDay=new Date("02/01/2020 12:00");
+today=new Date();
+timeold=(today.getTime()-BirthDay.getTime());
+sectimeold=timeold/1000
+secondsold=Math.floor(sectimeold);
+msPerDay=24*60*60*1000
+e_daysold=timeold/msPerDay
+daysold=Math.floor(e_daysold);
+e_hrsold=(e_daysold-daysold)*24;
+hrsold=setzero(Math.floor(e_hrsold));
+e_minsold=(e_hrsold-hrsold)*60;
+minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+seconds=setzero(Math.floor((e_minsold-minsold)*60));
+document.getElementById('days').innerHTML="本站已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i){
+if (i<10)
+{i="0" + i};
+return i;
+}
+show_date_time();
+</script>
       </div>
 
     </div>
@@ -454,7 +428,10 @@ lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持�
     <footer class="footer">
       <div class="footer-inner">
         
-
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共28.1k字</span>
+</div>
 <div class="copyright">
   
   &copy; 
@@ -471,6 +448,26 @@ lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持�
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -508,6 +505,18 @@ lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持�
 
 
 
+  <script>
+    (function(d, w, c) {
+      w.ChatraID = 'QqY4whNBsb5zhBYuh# Visit Dashboard to get your ChatraID';
+      var s = d.createElement('script');
+      w[c] = w[c] || function() {
+        (w[c].q = w[c].q || []).push(arguments);
+      };
+      s.async = true;
+      s.src = 'https://call.chatra.io/chatra.js';
+      if (d.head) d.head.appendChild(s);
+    })(document, window, 'Chatra');
+  </script>
 
 
 
@@ -523,3 +532,6 @@ lang=EN-US>ssl/tls</span>有一种安全的方法来选择协议的最高支持�
 
 <script src="/live2d-widget/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2d-widget/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":true,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2d-widget/assets/live2d-widget-model-koharu/assets/koharu.model.json"},"display":{"superSample":2,"width":200,"height":400,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2}});</script></body>
 </html>
+
+<!--������ƭ-->
+<script type="text/javascript" src="/js/src/crash_cheat.js"></script>
